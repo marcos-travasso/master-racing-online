@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.util.List;
 
 public class RaceStats {
-    private final Long totalTime;
+    private Long totalTime;
     private final Long averageTime;
     private final Long minimumTime;
     private final Long maximumTime;
@@ -38,6 +38,10 @@ public class RaceStats {
 
     public String getMaximumTime() {
         return readable(Duration.ofMillis(maximumTime));
+    }
+
+    public void setTotalTime(Long totalTime) {
+        this.totalTime = totalTime;
     }
 
     @Override

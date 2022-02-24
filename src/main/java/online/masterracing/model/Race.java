@@ -87,4 +87,17 @@ public class Race extends BaseEntity {
     public Circuit getCircuit() {
         return circuit;
     }
+
+    public Long getRaceTime(){
+        long maxTime = 0L;
+
+        for(Participation participation : getParticipants()){
+            long sum = participation.getLaps().stream().mapToLong(Lap::getTimeElapsed).sum();
+            if (sum > maxTime){
+                maxTime = sum;
+            }
+        }
+
+        return maxTime;
+    }
 }

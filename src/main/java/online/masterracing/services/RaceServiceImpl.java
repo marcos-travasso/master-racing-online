@@ -63,6 +63,9 @@ public class RaceServiceImpl implements RaceService{
         List<Lap> allLaps = new ArrayList<>();
         race.getParticipants().forEach(participation -> allLaps.addAll(participation.getLaps()));
 
-        return new RaceStats(allLaps);
+        RaceStats stats = new RaceStats(allLaps);
+        stats.setTotalTime(race.getRaceTime());
+
+        return stats;
     }
 }
