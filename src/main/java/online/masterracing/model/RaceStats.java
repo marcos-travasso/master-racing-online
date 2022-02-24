@@ -11,9 +11,13 @@ public class RaceStats {
 
     public RaceStats(List<Lap> laps) {
         totalTime = laps.stream().mapToLong(Lap::getTimeElapsed).sum();
-        averageTime = totalTime/laps.size();
         minimumTime = laps.stream().mapToLong(Lap::getTimeElapsed).min().orElse(0);
         maximumTime = laps.stream().mapToLong(Lap::getTimeElapsed).max().orElse(0);
+        if(laps.isEmpty()){
+            averageTime = 0L;
+        } else {
+            averageTime = totalTime/laps.size();
+        }
     }
 
     public String readable(Duration duration){

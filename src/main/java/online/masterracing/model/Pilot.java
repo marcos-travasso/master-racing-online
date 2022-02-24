@@ -16,16 +16,20 @@ public class Pilot extends BaseEntity {
     @JsonIgnore
     private final Set<Participation> participation = new HashSet<>();
 
-    public Pilot(String name) {
-        this.name = name;
-    }
-
     public Pilot() {
 
     }
 
+    public Pilot(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Participation> getParticipation() {

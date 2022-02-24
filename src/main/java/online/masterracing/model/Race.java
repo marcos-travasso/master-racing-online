@@ -79,4 +79,12 @@ public class Race extends BaseEntity {
     public String getCategory() {
         return category;
     }
+
+    public void setParticipants(Set<Participation> participants) {
+        this.participants = participants;
+    }
+
+    public Circuit getCircuit() {
+        return circuit;
+    }
 }
