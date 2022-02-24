@@ -1,5 +1,6 @@
 package online.masterracing.services;
 
+import online.masterracing.exceptions.RaceNotFoundException;
 import online.masterracing.model.Race;
 import online.masterracing.repositories.RaceRepository;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,17 @@ public class RaceServiceImpl implements RaceService{
     @Override
     public void deleteById(Long aLong) {
         raceRepository.deleteById(aLong);
+    }
+
+    @Override
+    public void startRace(Long id) {
+        Race race = findById(id);
+
+        if(race == null){
+            throw new RaceNotFoundException();
+        }
+
+        race.startRace();
+        save(race);
     }
 }

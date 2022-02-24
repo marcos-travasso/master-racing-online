@@ -1,5 +1,7 @@
 package online.masterracing.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +13,7 @@ public class Pilot extends BaseEntity {
     private String name;
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "pilot")
+    @JsonIgnore
     private Set<Participation> participation = new HashSet<>();
 
     public String getName() {
@@ -23,9 +26,5 @@ public class Pilot extends BaseEntity {
 
     public Set<Participation> getParticipation() {
         return participation;
-    }
-
-    public void setParticipation(Set<Participation> participation) {
-        this.participation = participation;
     }
 }

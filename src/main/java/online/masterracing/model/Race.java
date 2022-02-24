@@ -1,7 +1,10 @@
 package online.masterracing.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import online.masterracing.exceptions.RaceAlreadyStartedException;
+
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,32 +22,21 @@ public class Race extends BaseEntity {
     private int laps;
 
     @Column(name = "start_time")
-    private LocalTime startTime;
+    private Instant startTime;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Circuit circuit;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
     private Set<Participation> participants = new HashSet<>();
 
-    public String getDescription() {
-        return description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Circuit getCircuit() {
-        return circuit;
-    }
-
     public void setCircuit(Circuit circuit) {
         this.circuit = circuit;
-    }
-
-    public String getCategory() {
-        return category;
     }
 
     public void setCategory(String category) {
@@ -55,23 +47,19 @@ public class Race extends BaseEntity {
         return participants;
     }
 
-    public void setParticipants(Set<Participation> participants) {
-        this.participants = participants;
-    }
-
-    public int getLaps() {
-        return laps;
-    }
-
-    public void setLaps(int laps) {
-        this.laps = laps;
-    }
-
-    public LocalTime getStartTime() {
+    public Instant getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(Instant startTime) {
         this.startTime = startTime;
+    }
+
+    public void startRace(){
+        if(getStartTime() != null){
+            throw new RaceAlreadyStartedException();
+        }
+
+        setStartTime(Instant.now());
     }
 }

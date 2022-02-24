@@ -37,6 +37,10 @@ public class BootStrapData implements CommandLineRunner {
         participation1.setPilot(senna);
         participation1.setRace(gp);
 
+        /*gp.startRace();
+        TimeUnit.SECONDS.sleep(1);
+        participation1.addLap();*/
+
         participationService.save(participation1);
     }
 }
