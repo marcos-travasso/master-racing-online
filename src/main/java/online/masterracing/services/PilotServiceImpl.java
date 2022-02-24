@@ -51,6 +51,7 @@ public class PilotServiceImpl implements PilotService{
     @Override
     public RaceStats getStats(Long id) throws PilotNotFoundException {
         Pilot pilot = findById(id);
+
         List<Lap> allLaps = new ArrayList<>();
         pilot.getParticipation().forEach(participation -> allLaps.addAll(participation.getLaps()));
 

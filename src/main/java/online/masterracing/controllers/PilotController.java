@@ -1,5 +1,8 @@
 package online.masterracing.controllers;
 
+import online.masterracing.converters.PilotConverter;
+import online.masterracing.model.Pilot;
+import online.masterracing.model.PilotDTO;
 import online.masterracing.model.RaceStats;
 import online.masterracing.services.PilotService;
 import org.springframework.http.HttpStatus;
@@ -16,7 +19,8 @@ public class PilotController {
     }
 
     @GetMapping("/{id}/stats")
-    public @ResponseBody RaceStats getStats(@PathVariable Long id){
+    @ResponseBody
+    public RaceStats getStats(@PathVariable Long id){
         RaceStats stats;
         try{
             stats = pilotService.getStats(id);
@@ -25,5 +29,14 @@ public class PilotController {
         }
 
         return stats;
+    }
+
+    @PostMapping
+    @ResponseBody
+    public PilotDTO postPilot(@RequestBody PilotDTO pilotDTO){
+        Pilot pilot = PilotConverter.convertToPilot(pilotDTO);
+        pilotService.save(pilot);
+
+        return PilotConverter.convertToDTO(pilot);
     }
 }

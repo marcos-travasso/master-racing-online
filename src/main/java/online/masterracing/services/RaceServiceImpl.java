@@ -16,16 +16,16 @@ import java.util.Set;
 public class RaceServiceImpl implements RaceService{
 
     private final RaceRepository raceRepository;
+    private final CircuitService circuitService;
 
-    public RaceServiceImpl(RaceRepository raceRepository) {
+    public RaceServiceImpl(RaceRepository raceRepository, CircuitService circuitService) {
         this.raceRepository = raceRepository;
+        this.circuitService = circuitService;
     }
 
     @Override
     public Set<Race> findAll() {
-        Set<Race> races = new HashSet<>();
-        raceRepository.findAll().forEach(races::add);
-        return races;
+        return new HashSet<>(raceRepository.findAll());
     }
 
     @Override
@@ -35,6 +35,7 @@ public class RaceServiceImpl implements RaceService{
 
     @Override
     public Race save(Race object) {
+        object.setCircuit(circuitService.findById(object.getCircuit().getId()));
         return raceRepository.save(object);
     }
 

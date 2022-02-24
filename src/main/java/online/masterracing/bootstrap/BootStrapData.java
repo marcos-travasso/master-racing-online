@@ -8,8 +8,6 @@ import online.masterracing.services.CircuitService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.TimeUnit;
-
 @Component
 public class BootStrapData implements CommandLineRunner {
 
@@ -36,7 +34,7 @@ public class BootStrapData implements CommandLineRunner {
         Participation p1 = new Participation(senna, gp);
         Participation p2 = new Participation(schumacher, gp);
 
-        gp.startRace();
+        /*gp.startRace();
         p1.addLap();
         TimeUnit.SECONDS.sleep(1);
         p2.addLap();
@@ -45,7 +43,7 @@ public class BootStrapData implements CommandLineRunner {
         p2.addLap();
         p1.addLap();
         TimeUnit.SECONDS.sleep(1);
-        p2.addLap();
+        p2.addLap();*/
 
         Race race = new Race();
         race.setCategory("Carrinho de Compras");
@@ -55,10 +53,10 @@ public class BootStrapData implements CommandLineRunner {
 
         Participation p3 = new Participation(senna, race);
 
-        race.startRace();
+        /*race.startRace();
         p3.addLap();
         TimeUnit.SECONDS.sleep(5);
-        p3.addLap();
+        p3.addLap();*/
 
         circuitService.save(adelaide);
 

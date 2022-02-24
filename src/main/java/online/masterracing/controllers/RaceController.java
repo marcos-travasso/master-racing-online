@@ -1,6 +1,8 @@
 package online.masterracing.controllers;
 
+import online.masterracing.converters.RaceConverter;
 import online.masterracing.model.Race;
+import online.masterracing.model.RaceDTO;
 import online.masterracing.model.RaceStats;
 import online.masterracing.services.RaceService;
 import org.springframework.http.HttpStatus;
@@ -25,20 +27,19 @@ public class RaceController {
     }
 
     @PostMapping("/{id}/start")
-    public ResponseEntity<HttpStatus> startRace(@PathVariable Long id){
+    public ResponseEntity<String> startRace(@PathVariable Long id){
         try{
             raceService.startRace(id);
         } catch (RuntimeException e){
-            //TODO pergunta como melhorar isso
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
     @GetMapping("/{id}/stats")
-    public @ResponseBody
-    RaceStats getStats(@PathVariable Long id){
+    @ResponseBody
+    public RaceStats getStats(@PathVariable Long id){
         RaceStats stats;
         try{
             stats = raceService.getStats(id);
@@ -47,5 +48,14 @@ public class RaceController {
         }
 
         return stats;
+    }
+
+    @PostMapping
+    @ResponseBody
+    public RaceDTO postPilot(@RequestBody RaceDTO raceDTO){
+        Race race = RaceConverter.convertToRace(raceDTO);
+        raceService.save(race);
+
+        return RaceConverter.convertToDTO(race);
     }
 }
