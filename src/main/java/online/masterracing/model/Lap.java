@@ -26,7 +26,7 @@ public class Lap extends BaseEntity{
     public Lap(Participation participation) {
         this.participation = participation;
         this.actualTime = Instant.now();
-        this.timeElapsed =  Duration.between(participation.getRace().getStartTime(), Instant.now()).toMillis();
+        this.timeElapsed =  Duration.between(participation.getLastInstant(), Instant.now()).toMillis();
     }
 
     public Lap() {

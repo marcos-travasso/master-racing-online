@@ -63,4 +63,12 @@ public class Race extends BaseEntity {
 
         setStartTime(Instant.now());
     }
+
+    public int getLaps() {
+        return laps;
+    }
+
+    public void setLaps(int laps) {
+        this.laps = laps;
+    }
 }

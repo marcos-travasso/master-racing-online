@@ -25,7 +25,7 @@ public class BootStrapData implements CommandLineRunner {
         Race gp = new Race();
         gp.setCategory("F1");
         gp.setDescription("Grande Prêmio da Austrália de 1993");
-
+        gp.setLaps(3);
         gp.setCircuit(adelaide);
 
         Pilot senna = new Pilot();

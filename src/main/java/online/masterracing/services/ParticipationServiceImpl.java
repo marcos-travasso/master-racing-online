@@ -1,5 +1,7 @@
 package online.masterracing.services;
 
+import online.masterracing.exceptions.NotStartedRaceException;
+import online.masterracing.exceptions.ParticipationNotFoundException;
 import online.masterracing.model.Participation;
 import online.masterracing.repositories.ParticipationRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,7 @@ public class ParticipationServiceImpl implements ParticipationService{
 
     @Override
     public Participation findById(Long aLong) {
-        return participationRepository.findById(aLong).orElse(null);
+        return participationRepository.findById(aLong).orElseThrow(ParticipationNotFoundException::new);
     }
 
     @Override
@@ -41,5 +43,12 @@ public class ParticipationServiceImpl implements ParticipationService{
     @Override
     public void deleteById(Long aLong) {
         participationRepository.deleteById(aLong);
+    }
+
+    @Override
+    public void addLap(Long id) throws NotStartedRaceException {
+        Participation participation = findById(id);
+        participation.addLap();
+        save(participation);
     }
 }

@@ -2,8 +2,10 @@ package online.masterracing.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import online.masterracing.exceptions.NotStartedRaceException;
+import online.masterracing.exceptions.PilotFinishedRaceException;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,21 @@ public class Participation extends BaseEntity {
             throw new NotStartedRaceException();
         }
 
+        if(getRace().getLaps() == getLaps().size()){
+            throw new PilotFinishedRaceException();
+        }
+
         Lap lap = new Lap(this);
         laps.add(lap);
+    }
+
+    @JsonIgnore
+    public Instant getLastInstant(){
+        if(getLaps().isEmpty()){
+            return getRace().getStartTime();
+        }
+
+        Lap lastLap = getLaps().get(getLaps().size() - 1);
+        return lastLap.getActualTime();
     }
 }
