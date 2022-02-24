@@ -37,6 +37,7 @@ public class Race extends BaseEntity {
 
     public void setCircuit(Circuit circuit) {
         this.circuit = circuit;
+        circuit.getRaces().add(this);
     }
 
     public void setCategory(String category) {

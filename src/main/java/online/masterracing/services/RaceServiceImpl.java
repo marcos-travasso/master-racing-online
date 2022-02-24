@@ -25,8 +25,8 @@ public class RaceServiceImpl implements RaceService{
     }
 
     @Override
-    public Race findById(Long aLong) {
-        return raceRepository.findById(aLong).orElse(null);
+    public Race findById(Long aLong){
+        return raceRepository.findById(aLong).orElseThrow(RaceNotFoundException::new);
     }
 
     @Override
@@ -47,10 +47,6 @@ public class RaceServiceImpl implements RaceService{
     @Override
     public void startRace(Long id) {
         Race race = findById(id);
-
-        if(race == null){
-            throw new RaceNotFoundException();
-        }
 
         race.startRace();
         save(race);

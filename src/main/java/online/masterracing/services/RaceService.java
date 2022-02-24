@@ -4,5 +4,8 @@ import online.masterracing.exceptions.RaceNotFoundException;
 import online.masterracing.model.Race;
 
 public interface RaceService extends CrudService<Race, Long>{
-    void startRace(Long id) throws RaceNotFoundException;
+    @Override
+    Race findById(Long aLong) throws RaceNotFoundException;
+
+    void startRace(Long id);
 }
