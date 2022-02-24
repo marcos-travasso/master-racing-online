@@ -1,6 +1,7 @@
 package online.masterracing.controllers;
 
 import online.masterracing.model.Race;
+import online.masterracing.model.RaceStats;
 import online.masterracing.services.RaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +34,18 @@ public class RaceController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/stats")
+    public @ResponseBody
+    RaceStats getStats(@PathVariable Long id){
+        RaceStats stats;
+        try{
+            stats = raceService.getStats(id);
+        } catch (RuntimeException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
+        }
+
+        return stats;
     }
 }

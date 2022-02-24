@@ -1,10 +1,15 @@
 package online.masterracing.services;
 
+import online.masterracing.exceptions.PilotNotFoundException;
+import online.masterracing.model.Lap;
 import online.masterracing.model.Pilot;
+import online.masterracing.model.RaceStats;
 import online.masterracing.repositories.PilotRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -41,5 +46,14 @@ public class PilotServiceImpl implements PilotService{
     @Override
     public void deleteById(Long aLong) {
         pilotRepository.deleteById(aLong);
+    }
+
+    @Override
+    public RaceStats getStats(Long id) throws PilotNotFoundException {
+        Pilot pilot = findById(id);
+        List<Lap> allLaps = new ArrayList<>();
+        pilot.getParticipation().forEach(participation -> allLaps.addAll(participation.getLaps()));
+
+        return new RaceStats(allLaps);
     }
 }

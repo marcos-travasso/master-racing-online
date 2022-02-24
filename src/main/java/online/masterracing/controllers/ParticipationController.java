@@ -18,6 +18,10 @@ public class ParticipationController {
         this.participationService = participationService;
     }
 
+    //Aqui eu pensei em fazer /{raceId}/pilots/{pilotId}/lap
+    //daí instanciar um objeto Participation e colocar os ids,
+    //mas acho que ficaria uma bagunça, então optei por deixar
+    //o id da participation de uma vez.
     @PostMapping("/{id}/lap")
     public ResponseEntity<HttpStatus> postLap(@PathVariable Long id){
         try{

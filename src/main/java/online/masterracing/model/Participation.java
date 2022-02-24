@@ -68,4 +68,8 @@ public class Participation extends BaseEntity {
         Lap lastLap = getLaps().get(getLaps().size() - 1);
         return lastLap.getActualTime();
     }
+
+    public RaceStats getStats(){
+        return new RaceStats(getLaps());
+    }
 }

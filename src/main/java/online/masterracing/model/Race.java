@@ -71,4 +71,12 @@ public class Race extends BaseEntity {
     public void setLaps(int laps) {
         this.laps = laps;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
 }

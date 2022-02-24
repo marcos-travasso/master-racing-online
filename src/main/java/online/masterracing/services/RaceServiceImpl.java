@@ -1,11 +1,15 @@
 package online.masterracing.services;
 
 import online.masterracing.exceptions.RaceNotFoundException;
+import online.masterracing.model.Lap;
 import online.masterracing.model.Race;
+import online.masterracing.model.RaceStats;
 import online.masterracing.repositories.RaceRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -50,5 +54,14 @@ public class RaceServiceImpl implements RaceService{
 
         race.startRace();
         save(race);
+    }
+
+    @Override
+    public RaceStats getStats(Long id) throws RaceNotFoundException {
+        Race race = findById(id);
+        List<Lap> allLaps = new ArrayList<>();
+        race.getParticipants().forEach(participation -> allLaps.addAll(participation.getLaps()));
+
+        return new RaceStats(allLaps);
     }
 }

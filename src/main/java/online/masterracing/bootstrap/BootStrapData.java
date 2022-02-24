@@ -4,18 +4,20 @@ import online.masterracing.model.Circuit;
 import online.masterracing.model.Participation;
 import online.masterracing.model.Pilot;
 import online.masterracing.model.Race;
-import online.masterracing.services.ParticipationServiceImpl;
+import online.masterracing.services.CircuitService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
 
-    private final ParticipationServiceImpl participationService;
-
-    public BootStrapData(ParticipationServiceImpl participationService) {
-        this.participationService = participationService;
+    public BootStrapData(CircuitService circuitService) {
+        this.circuitService = circuitService;
     }
+
+    private final CircuitService circuitService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,10 +39,38 @@ public class BootStrapData implements CommandLineRunner {
         participation1.setPilot(senna);
         participation1.setRace(gp);
 
-        /*gp.startRace();
-        TimeUnit.SECONDS.sleep(1);
-        participation1.addLap();*/
+        Participation participation2 = new Participation();
+        participation2.setPilot(schumacher);
+        participation2.setRace(gp);
 
-        participationService.save(participation1);
+        gp.startRace();
+        participation1.addLap();
+        TimeUnit.SECONDS.sleep(1);
+        participation2.addLap();
+        participation1.addLap();
+        TimeUnit.SECONDS.sleep(2);
+        participation2.addLap();
+        participation1.addLap();
+        TimeUnit.SECONDS.sleep(1);
+        participation2.addLap();
+
+        Race race = new Race();
+        race.setCategory("Carrinho de Compras");
+        race.setDescription("Grande Prêmio de Adelaide de Compras");
+        race.setLaps(2);
+        race.setCircuit(adelaide);
+
+        Participation participation3 = new Participation();
+        participation3.setRace(race);
+        participation3.setPilot(senna);
+
+        race.startRace();
+        participation3.addLap();
+        TimeUnit.SECONDS.sleep(5);
+        participation3.addLap();
+
+        circuitService.save(adelaide);
+
+        System.out.println("Bootstrap loaded ------------");
     }
 }
