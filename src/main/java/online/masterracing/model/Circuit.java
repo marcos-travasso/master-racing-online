@@ -1,0 +1,31 @@
+package online.masterracing.model;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "circuits")
+public class Circuit extends BaseEntity {
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "circuit")
+    private Set<Race> races = new HashSet<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Race> getRaces() {
+        return races;
+    }
+
+    public void setRaces(Set<Race> races) {
+        this.races = races;
+    }
+}
