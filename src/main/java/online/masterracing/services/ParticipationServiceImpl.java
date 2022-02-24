@@ -13,9 +13,13 @@ import java.util.Set;
 public class ParticipationServiceImpl implements ParticipationService{
 
     private final ParticipationRepository participationRepository;
+    private final RaceService raceService;
+    private final PilotService pilotService;
 
-    public ParticipationServiceImpl(ParticipationRepository participationRepository) {
+    public ParticipationServiceImpl(ParticipationRepository participationRepository, RaceService raceService, PilotService pilotService) {
         this.participationRepository = participationRepository;
+        this.raceService = raceService;
+        this.pilotService = pilotService;
     }
 
     @Override
@@ -30,6 +34,8 @@ public class ParticipationServiceImpl implements ParticipationService{
 
     @Override
     public Participation save(Participation object) {
+        object.setRace(raceService.findById(object.getRace().getId()));
+        object.setPilot(pilotService.findById(object.getPilot().getId()));
         return participationRepository.save(object);
     }
 
@@ -53,6 +59,7 @@ public class ParticipationServiceImpl implements ParticipationService{
     @Override
     public RaceStats getStats(Long id) {
         Participation participation = findById(id);
+
         return participation.getStats();
     }
 }

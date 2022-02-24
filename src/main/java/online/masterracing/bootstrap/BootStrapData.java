@@ -1,14 +1,8 @@
 package online.masterracing.bootstrap;
 
-import online.masterracing.model.Circuit;
-import online.masterracing.model.Participation;
-import online.masterracing.model.Pilot;
-import online.masterracing.model.Race;
 import online.masterracing.services.CircuitService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -21,7 +15,7 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Circuit adelaide = new Circuit();
+        /*Circuit adelaide = new Circuit();
         adelaide.setName("Circuito de Rua de Adelaide");
 
         Race gp = new Race();
@@ -60,7 +54,7 @@ public class BootStrapData implements CommandLineRunner {
         TimeUnit.SECONDS.sleep(5);
         p3.addLap();
 
-        circuitService.save(adelaide);
+        circuitService.save(adelaide);*/
 
         System.out.println("Bootstrap loaded ------------");
     }

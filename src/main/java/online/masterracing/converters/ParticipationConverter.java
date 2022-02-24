@@ -2,6 +2,8 @@ package online.masterracing.converters;
 
 import online.masterracing.model.Participation;
 import online.masterracing.model.ParticipationDTO;
+import online.masterracing.model.Pilot;
+import online.masterracing.model.Race;
 
 public class ParticipationConverter {
     private ParticipationConverter(){}
@@ -9,17 +11,20 @@ public class ParticipationConverter {
     public static Participation convertToParticipation(ParticipationDTO participationDTO){
         Participation participation = new Participation();
         participation.setId(participationDTO.getId());
-        participation.setPilot(PilotConverter.convertToPilot(participationDTO.getPilot()));
-        participation.setRace(RaceConverter.convertToRace(participationDTO.getRace()));
+
+        participation.setPilot(new Pilot());
+        participation.getPilot().setId(participationDTO.getPilotId());
+        participation.setRace(new Race());
+        participation.getRace().setId(participationDTO.getRaceId());
 
         return participation;
     }
 
     public static ParticipationDTO convertToDTO(Participation participation){
         ParticipationDTO participationDTO = new ParticipationDTO();
-        participationDTO.setId(participationDTO.getId());
-        participationDTO.setPilot(PilotConverter.convertToDTO(participation.getPilot()));
-        participationDTO.setRace(RaceConverter.convertToDTO(participation.getRace()));
+        participationDTO.setId(participation.getId());
+        participationDTO.setPilotId(participation.getPilot().getId());
+        participationDTO.setRaceId(participation.getRace().getId());
 
         return participationDTO;
     }

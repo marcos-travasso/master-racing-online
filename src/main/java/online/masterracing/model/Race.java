@@ -1,5 +1,6 @@
 package online.masterracing.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import online.masterracing.exceptions.RaceAlreadyStartedException;
 
@@ -90,6 +91,7 @@ public class Race extends BaseEntity {
         return circuit;
     }
 
+    @JsonIgnore
     public Long getRaceTime(){
         long maxTime = 0L;
 

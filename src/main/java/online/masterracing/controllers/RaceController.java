@@ -56,7 +56,7 @@ public class RaceController {
 
     @PostMapping
     @ResponseBody
-    public RaceDTO postPilot(@RequestBody RaceDTO raceDTO){
+    public RaceDTO postRace(@RequestBody RaceDTO raceDTO){
         Race race = RaceConverter.convertToRace(raceDTO);
         raceService.save(race);
 

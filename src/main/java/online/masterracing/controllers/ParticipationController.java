@@ -1,15 +1,15 @@
 package online.masterracing.controllers;
 
+import online.masterracing.converters.ParticipationConverter;
 import online.masterracing.exceptions.NotFoundException;
 import online.masterracing.exceptions.NotStartedRaceException;
 import online.masterracing.exceptions.PilotFinishedRaceException;
+import online.masterracing.model.Participation;
+import online.masterracing.model.ParticipationDTO;
 import online.masterracing.services.ParticipationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/races")
 @RestController
@@ -37,5 +37,14 @@ public class ParticipationController {
         }
 
         return new ResponseEntity<>("Lap added", HttpStatus.OK);
+    }
+
+    @PostMapping("/participation")
+    @ResponseBody
+    public ParticipationDTO postParticipation(@RequestBody ParticipationDTO participationDTO){
+        Participation participation = ParticipationConverter.convertToParticipation(participationDTO);
+        participationService.save(participation);
+
+        return ParticipationConverter.convertToDTO(participation);
     }
 }
