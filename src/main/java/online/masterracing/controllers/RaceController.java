@@ -1,6 +1,8 @@
 package online.masterracing.controllers;
 
 import online.masterracing.converters.RaceConverter;
+import online.masterracing.exceptions.NotFoundException;
+import online.masterracing.exceptions.RaceAlreadyStartedException;
 import online.masterracing.model.Race;
 import online.masterracing.model.RaceDTO;
 import online.masterracing.model.RaceStats;
@@ -8,7 +10,6 @@ import online.masterracing.services.RaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 @RestController
 public class RaceController {
     private final RaceService raceService;
+    private static final String RACE_NOT_FOUND = "Race not found";
 
     public RaceController(RaceService raceService) {
         this.raceService = raceService;
@@ -30,24 +32,26 @@ public class RaceController {
     public ResponseEntity<String> startRace(@PathVariable Long id){
         try{
             raceService.startRace(id);
-        } catch (RuntimeException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (RaceAlreadyStartedException e){
+            return new ResponseEntity<>("Race already started", HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException e){
+            return new ResponseEntity<>(RACE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>("success", HttpStatus.OK);
+        return new ResponseEntity<>("Race started", HttpStatus.OK);
     }
 
     @GetMapping("/{id}/stats")
     @ResponseBody
-    public RaceStats getStats(@PathVariable Long id){
+    public ResponseEntity<?> getStats(@PathVariable Long id){
         RaceStats stats;
         try{
             stats = raceService.getStats(id);
-        } catch (RuntimeException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
+        } catch (NotFoundException e){
+            return new ResponseEntity<>(RACE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
 
-        return stats;
+        return new ResponseEntity<>(stats, HttpStatus.OK);
     }
 
     @PostMapping

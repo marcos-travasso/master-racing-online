@@ -1,7 +1,6 @@
 package online.masterracing.services;
 
-import online.masterracing.exceptions.NotStartedRaceException;
-import online.masterracing.exceptions.ParticipationNotFoundException;
+import online.masterracing.exceptions.NotFoundException;
 import online.masterracing.model.Participation;
 import online.masterracing.model.RaceStats;
 import online.masterracing.repositories.ParticipationRepository;
@@ -21,14 +20,12 @@ public class ParticipationServiceImpl implements ParticipationService{
 
     @Override
     public Set<Participation> findAll() {
-        Set<Participation> participation = new HashSet<>();
-        participationRepository.findAll().forEach(participation::add);
-        return participation;
+        return new HashSet<>(participationRepository.findAll());
     }
 
     @Override
     public Participation findById(Long aLong) {
-        return participationRepository.findById(aLong).orElseThrow(ParticipationNotFoundException::new);
+        return participationRepository.findById(aLong).orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -47,7 +44,7 @@ public class ParticipationServiceImpl implements ParticipationService{
     }
 
     @Override
-    public void addLap(Long id) throws NotStartedRaceException {
+    public void addLap(Long id) {
         Participation participation = findById(id);
         participation.addLap();
         save(participation);

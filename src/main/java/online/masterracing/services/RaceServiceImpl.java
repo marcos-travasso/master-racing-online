@@ -1,6 +1,6 @@
 package online.masterracing.services;
 
-import online.masterracing.exceptions.RaceNotFoundException;
+import online.masterracing.exceptions.NotFoundException;
 import online.masterracing.model.Lap;
 import online.masterracing.model.Race;
 import online.masterracing.model.RaceStats;
@@ -30,7 +30,7 @@ public class RaceServiceImpl implements RaceService{
 
     @Override
     public Race findById(Long aLong){
-        return raceRepository.findById(aLong).orElseThrow(RaceNotFoundException::new);
+        return raceRepository.findById(aLong).orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class RaceServiceImpl implements RaceService{
     }
 
     @Override
-    public RaceStats getStats(Long id) throws RaceNotFoundException {
+    public RaceStats getStats(Long id) {
         Race race = findById(id);
         List<Lap> allLaps = new ArrayList<>();
         race.getParticipants().forEach(participation -> allLaps.addAll(participation.getLaps()));

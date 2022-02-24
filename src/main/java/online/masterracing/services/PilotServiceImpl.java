@@ -1,6 +1,6 @@
 package online.masterracing.services;
 
-import online.masterracing.exceptions.PilotNotFoundException;
+import online.masterracing.exceptions.NotFoundException;
 import online.masterracing.model.Lap;
 import online.masterracing.model.Pilot;
 import online.masterracing.model.RaceStats;
@@ -23,14 +23,12 @@ public class PilotServiceImpl implements PilotService{
 
     @Override
     public Set<Pilot> findAll() {
-        Set<Pilot> pilots = new HashSet<>();
-        pilotRepository.findAll().forEach(pilots::add);
-        return pilots;
+        return new HashSet<>(pilotRepository.findAll());
     }
 
     @Override
     public Pilot findById(Long aLong) {
-        return pilotRepository.findById(aLong).orElse(null);
+        return pilotRepository.findById(aLong).orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -49,7 +47,7 @@ public class PilotServiceImpl implements PilotService{
     }
 
     @Override
-    public RaceStats getStats(Long id) throws PilotNotFoundException {
+    public RaceStats getStats(Long id) {
         Pilot pilot = findById(id);
 
         List<Lap> allLaps = new ArrayList<>();
