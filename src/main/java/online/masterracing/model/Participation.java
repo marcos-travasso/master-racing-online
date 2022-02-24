@@ -22,7 +22,16 @@ public class Participation extends BaseEntity {
     private Race race;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "participation")
-    private List<Lap> laps = new ArrayList<>();
+    private final List<Lap> laps = new ArrayList<>();
+
+    public Participation(Pilot pilot, Race race) {
+        setPilot(pilot);
+        setRace(race);
+    }
+
+    public Participation() {
+
+    }
 
     public Pilot getPilot() {
         return pilot;

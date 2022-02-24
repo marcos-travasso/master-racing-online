@@ -30,29 +30,22 @@ public class BootStrapData implements CommandLineRunner {
         gp.setLaps(3);
         gp.setCircuit(adelaide);
 
-        Pilot senna = new Pilot();
-        senna.setName("Ayrton Senna");
-        Pilot schumacher = new Pilot();
-        schumacher.setName("Michael Schumacher");
+        Pilot senna = new Pilot("Ayrton Senna");
+        Pilot schumacher = new Pilot("Michael Schumacher");
 
-        Participation participation1 = new Participation();
-        participation1.setPilot(senna);
-        participation1.setRace(gp);
-
-        Participation participation2 = new Participation();
-        participation2.setPilot(schumacher);
-        participation2.setRace(gp);
+        Participation p1 = new Participation(senna, gp);
+        Participation p2 = new Participation(schumacher, gp);
 
         gp.startRace();
-        participation1.addLap();
+        p1.addLap();
         TimeUnit.SECONDS.sleep(1);
-        participation2.addLap();
-        participation1.addLap();
+        p2.addLap();
+        p1.addLap();
         TimeUnit.SECONDS.sleep(2);
-        participation2.addLap();
-        participation1.addLap();
+        p2.addLap();
+        p1.addLap();
         TimeUnit.SECONDS.sleep(1);
-        participation2.addLap();
+        p2.addLap();
 
         Race race = new Race();
         race.setCategory("Carrinho de Compras");
@@ -60,14 +53,12 @@ public class BootStrapData implements CommandLineRunner {
         race.setLaps(2);
         race.setCircuit(adelaide);
 
-        Participation participation3 = new Participation();
-        participation3.setRace(race);
-        participation3.setPilot(senna);
+        Participation p3 = new Participation(senna, race);
 
         race.startRace();
-        participation3.addLap();
+        p3.addLap();
         TimeUnit.SECONDS.sleep(5);
-        participation3.addLap();
+        p3.addLap();
 
         circuitService.save(adelaide);
 

@@ -1,6 +1,6 @@
 package online.masterracing.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ public class Circuit extends BaseEntity {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "circuit")
-    @JsonBackReference
+    @JsonIgnore
     private Set<Race> races = new HashSet<>();
 
     public String getName() {

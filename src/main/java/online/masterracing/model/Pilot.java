@@ -14,14 +14,18 @@ public class Pilot extends BaseEntity {
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "pilot")
     @JsonIgnore
-    private Set<Participation> participation = new HashSet<>();
+    private final Set<Participation> participation = new HashSet<>();
+
+    public Pilot(String name) {
+        this.name = name;
+    }
+
+    public Pilot() {
+
+    }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Set<Participation> getParticipation() {
