@@ -5,7 +5,9 @@ import online.masterracing.exceptions.RaceAlreadyStartedException;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -99,5 +101,15 @@ public class Race extends BaseEntity {
         }
 
         return maxTime;
+    }
+
+    public RaceStats getStats(){
+        List<Lap> allLaps = new ArrayList<>();
+        getParticipants().forEach(participation -> allLaps.addAll(participation.getLaps()));
+
+        RaceStats stats = new RaceStats(allLaps);
+        stats.setTotalTime(getRaceTime());
+
+        return stats;
     }
 }
