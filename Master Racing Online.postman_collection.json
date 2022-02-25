@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "f9424bce-ee15-4d0a-a0b6-ccbac5425779",
+		"name": "Master Racing Online",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all races",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ADDRESS}}/races",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"races"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start race by ID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{ADDRESS}}/races/:id/start",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"races",
+						":id",
+						"start"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post lap",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{ADDRESS}}/races/:id/lap",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"races",
+						":id",
+						"lap"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pilot stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ADDRESS}}/pilots/:id/stats",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"pilots",
+						":id",
+						"stats"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get race stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ADDRESS}}/races/:id/stats",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"races",
+						":id",
+						"stats"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post pilot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Senna\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ADDRESS}}/pilots",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"pilots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post circuit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Interlagos\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ADDRESS}}/circuits",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"circuits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post race",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"Grande corrida do Interlagos\",\r\n    \"category\": \"Corrida de carrinho de rolimã\",\r\n    \"laps\": 3,\r\n    \"circuitId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ADDRESS}}/races",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"races"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post participation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pilotId\": 1,\r\n    \"raceId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ADDRESS}}/races/participation",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"races",
+						"participation"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ADDRESS",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	]
+}
