@@ -6,9 +6,6 @@ import online.masterracing.model.Race;
 import online.masterracing.model.RaceStats;
 
 public interface RaceService extends CrudService<Race, Long>{
-    @Override
-    Race findById(Long aLong) throws NotFoundException;
-
     void startRace(Long id) throws RaceAlreadyStartedException, NotFoundException;
 
     RaceStats getStats(Long id) throws NotFoundException;

@@ -20,7 +20,6 @@ public class PilotController {
     }
 
     @GetMapping("/{id}/stats")
-    @ResponseBody
     public ResponseEntity<?> getStats(@PathVariable Long id){
         RaceStats stats;
         try{
@@ -33,7 +32,6 @@ public class PilotController {
     }
 
     @PostMapping
-    @ResponseBody
     public PilotDTO postPilot(@RequestBody PilotDTO pilotDTO){
         Pilot pilot = PilotConverter.convertToPilot(pilotDTO);
         pilotService.save(pilot);

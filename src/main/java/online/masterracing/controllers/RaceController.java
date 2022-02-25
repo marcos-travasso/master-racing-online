@@ -42,7 +42,6 @@ public class RaceController {
     }
 
     @GetMapping("/{id}/stats")
-    @ResponseBody
     public ResponseEntity<?> getStats(@PathVariable Long id){
         RaceStats stats;
         try{
@@ -55,7 +54,6 @@ public class RaceController {
     }
 
     @PostMapping
-    @ResponseBody
     public RaceDTO postRace(@RequestBody RaceDTO raceDTO){
         Race race = RaceConverter.convertToRace(raceDTO);
         raceService.save(race);
