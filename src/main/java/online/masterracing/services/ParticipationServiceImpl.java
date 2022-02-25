@@ -1,7 +1,10 @@
 package online.masterracing.services;
 
 import online.masterracing.exceptions.NotFoundException;
+import online.masterracing.exceptions.PilotAlreadyInRaceException;
 import online.masterracing.model.Participation;
+import online.masterracing.model.Pilot;
+import online.masterracing.model.Race;
 import online.masterracing.model.RaceStats;
 import online.masterracing.repositories.ParticipationRepository;
 import org.springframework.stereotype.Service;
@@ -34,8 +37,6 @@ public class ParticipationServiceImpl implements ParticipationService{
 
     @Override
     public Participation save(Participation object) {
-        object.setRace(raceService.findById(object.getRace().getId()));
-        object.setPilot(pilotService.findById(object.getPilot().getId()));
         return participationRepository.save(object);
     }
 
@@ -61,5 +62,20 @@ public class ParticipationServiceImpl implements ParticipationService{
         Participation participation = findById(id);
 
         return participation.getStats();
+    }
+
+    @Override
+    public Participation addParticipation(Participation object) {
+        Pilot pilot = pilotService.findById(object.getPilot().getId());
+        Race race = raceService.findById(object.getRace().getId());
+
+        if(pilot.isInRace(race)){
+            throw new PilotAlreadyInRaceException();
+        }
+
+        object.setPilot(pilot);
+        object.setRace(race);
+
+        return participationRepository.save(object);
     }
 }

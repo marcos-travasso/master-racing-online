@@ -3,6 +3,7 @@ package online.masterracing.controllers;
 import online.masterracing.converters.ParticipationConverter;
 import online.masterracing.exceptions.NotFoundException;
 import online.masterracing.exceptions.NotStartedRaceException;
+import online.masterracing.exceptions.PilotAlreadyInRaceException;
 import online.masterracing.exceptions.PilotFinishedRaceException;
 import online.masterracing.model.Participation;
 import online.masterracing.model.ParticipationDTO;
@@ -40,11 +41,17 @@ public class ParticipationController {
     }
 
     @PostMapping("/participation")
-    @ResponseBody
-    public ParticipationDTO postParticipation(@RequestBody ParticipationDTO participationDTO){
+    public ResponseEntity<?> postParticipation(@RequestBody ParticipationDTO participationDTO){
         Participation participation = ParticipationConverter.convertToParticipation(participationDTO);
-        participationService.save(participation);
 
-        return ParticipationConverter.convertToDTO(participation);
+        try {
+            participationService.addParticipation(participation);
+        } catch (PilotAlreadyInRaceException e){
+            return new ResponseEntity<>("Pilot is already in the race", HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException e){
+            return new ResponseEntity<>("Pilot ou race was not found", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(ParticipationConverter.convertToDTO(participation), HttpStatus.OK);
     }
 }

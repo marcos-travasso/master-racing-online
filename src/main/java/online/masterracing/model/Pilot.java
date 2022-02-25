@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -34,5 +35,15 @@ public class Pilot extends BaseEntity {
 
     public Set<Participation> getParticipation() {
         return participation;
+    }
+
+    public boolean isInRace(Race race){
+        for(Participation p : getParticipation()){
+            if(Objects.equals(p.getRace().getId(), race.getId())){
+                return true;
+            }
+        }
+
+        return false;
     }
 }
