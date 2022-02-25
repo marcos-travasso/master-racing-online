@@ -18,9 +18,7 @@ public class CircuitServiceImpl implements CircuitService {
 
     @Override
     public Set<Circuit> findAll() {
-        Set<Circuit> circuits = new HashSet<>();
-        circuitRepository.findAll().forEach(circuits::add);
-        return circuits;
+        return new HashSet<>(circuitRepository.findAll());
     }
 
     @Override
