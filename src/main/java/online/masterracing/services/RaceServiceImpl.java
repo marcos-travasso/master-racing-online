@@ -37,16 +37,6 @@ public class RaceServiceImpl implements RaceService{
     }
 
     @Override
-    public void delete(Race object) {
-        raceRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        raceRepository.deleteById(aLong);
-    }
-
-    @Override
     public void startRace(Long id) {
         Race race = findById(id);
 

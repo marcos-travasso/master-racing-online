@@ -41,16 +41,6 @@ public class ParticipationServiceImpl implements ParticipationService{
     }
 
     @Override
-    public void delete(Participation object) {
-        participationRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        participationRepository.deleteById(aLong);
-    }
-
-    @Override
     public void addLap(Long id) {
         Participation participation = findById(id);
         participation.addLap();

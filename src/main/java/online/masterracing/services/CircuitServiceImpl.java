@@ -30,14 +30,4 @@ public class CircuitServiceImpl implements CircuitService {
     public Circuit save(Circuit object) {
         return circuitRepository.save(object);
     }
-
-    @Override
-    public void delete(Circuit object) {
-        circuitRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        circuitRepository.deleteById(aLong);
-    }
 }

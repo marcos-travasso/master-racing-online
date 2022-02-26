@@ -37,16 +37,6 @@ public class PilotServiceImpl implements PilotService{
     }
 
     @Override
-    public void delete(Pilot object) {
-        pilotRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        pilotRepository.deleteById(aLong);
-    }
-
-    @Override
     public RaceStats getStats(Long id) {
         Pilot pilot = findById(id);
 

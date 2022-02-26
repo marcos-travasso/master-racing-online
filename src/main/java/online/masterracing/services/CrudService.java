@@ -10,8 +10,4 @@ public interface CrudService<T, ID> {
     T findById(ID id) throws NotFoundException;
 
     T save(T object);
-
-    void delete(T object);
-
-    void deleteById(ID id);
 }
