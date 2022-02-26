@@ -42,22 +42,18 @@ public class RaceController {
     }
 
     @GetMapping("/{id}/stats")
-    public ResponseEntity<?> getStats(@PathVariable Long id){
+    public ResponseEntity<RaceStats> getStats(@PathVariable Long id){
         RaceStats stats;
-        try{
-            stats = raceService.getStats(id);
-        } catch (NotFoundException e){
-            return new ResponseEntity<>(RACE_NOT_FOUND, HttpStatus.NOT_FOUND);
-        }
+        stats = raceService.getStats(id);
 
         return new ResponseEntity<>(stats, HttpStatus.OK);
     }
 
     @PostMapping
-    public RaceDTO postRace(@RequestBody RaceDTO raceDTO){
+    public ResponseEntity<RaceDTO> postRace(@RequestBody RaceDTO raceDTO){
         Race race = RaceConverter.convertToRace(raceDTO);
         raceService.save(race);
 
-        return RaceConverter.convertToDTO(race);
+        return new ResponseEntity<>(RaceConverter.convertToDTO(race), HttpStatus.OK);
     }
 }

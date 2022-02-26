@@ -7,6 +7,7 @@ import online.masterracing.model.Pilot;
 import online.masterracing.model.Race;
 import online.masterracing.model.RaceStats;
 import online.masterracing.repositories.ParticipationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -19,9 +20,10 @@ public class ParticipationServiceImpl implements ParticipationService{
     private RaceService raceService;
     private PilotService pilotService;
 
-    public ParticipationServiceImpl() {
+    private ParticipationServiceImpl() {
     }
 
+    @Autowired
     public ParticipationServiceImpl(ParticipationRepository participationRepository, RaceService raceService, PilotService pilotService) {
         this.participationRepository = participationRepository;
         this.raceService = raceService;

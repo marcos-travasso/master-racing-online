@@ -1,7 +1,6 @@
 package online.masterracing.controllers;
 
 import online.masterracing.converters.PilotConverter;
-import online.masterracing.exceptions.NotFoundException;
 import online.masterracing.model.Pilot;
 import online.masterracing.model.PilotDTO;
 import online.masterracing.model.RaceStats;
@@ -20,22 +19,18 @@ public class PilotController {
     }
 
     @GetMapping("/{id}/stats")
-    public ResponseEntity<?> getStats(@PathVariable Long id){
+    public ResponseEntity<RaceStats> getStats(@PathVariable Long id){
         RaceStats stats;
-        try{
-            stats = pilotService.getStats(id);
-        } catch (NotFoundException e){
-            return new ResponseEntity<>("Pilot not found", HttpStatus.NOT_FOUND);
-        }
+        stats = pilotService.getStats(id);
 
         return new ResponseEntity<>(stats, HttpStatus.OK);
     }
 
     @PostMapping
-    public PilotDTO postPilot(@RequestBody PilotDTO pilotDTO){
+    public ResponseEntity<PilotDTO> postPilot(@RequestBody PilotDTO pilotDTO){
         Pilot pilot = PilotConverter.convertToPilot(pilotDTO);
         pilotService.save(pilot);
 
-        return PilotConverter.convertToDTO(pilot);
+        return new  ResponseEntity<>(PilotConverter.convertToDTO(pilot), HttpStatus.OK);
     }
 }
