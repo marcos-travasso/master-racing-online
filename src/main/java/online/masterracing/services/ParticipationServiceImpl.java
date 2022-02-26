@@ -15,9 +15,12 @@ import java.util.Set;
 @Service
 public class ParticipationServiceImpl implements ParticipationService{
 
-    private final ParticipationRepository participationRepository;
-    private final RaceService raceService;
-    private final PilotService pilotService;
+    private ParticipationRepository participationRepository;
+    private RaceService raceService;
+    private PilotService pilotService;
+
+    public ParticipationServiceImpl() {
+    }
 
     public ParticipationServiceImpl(ParticipationRepository participationRepository, RaceService raceService, PilotService pilotService) {
         this.participationRepository = participationRepository;

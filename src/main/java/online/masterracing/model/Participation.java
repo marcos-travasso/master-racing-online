@@ -22,7 +22,7 @@ public class Participation extends BaseEntity {
     private Race race;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "participation")
-    private final List<Lap> laps = new ArrayList<>();
+    private List<Lap> laps = new ArrayList<>();
 
     public Participation(Pilot pilot, Race race) {
         setPilot(pilot);
@@ -53,6 +53,10 @@ public class Participation extends BaseEntity {
 
     public List<Lap> getLaps() {
         return laps;
+    }
+
+    public void setLaps(List<Lap> laps) {
+        this.laps = laps;
     }
 
     public void addLap() throws NotStartedRaceException {

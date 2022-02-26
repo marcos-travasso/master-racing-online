@@ -36,6 +36,10 @@ public class Lap extends BaseEntity{
         return timeElapsed;
     }
 
+    public void setTimeElapsed(Long timeElapsed) {
+        this.timeElapsed = timeElapsed;
+    }
+
     public Instant getActualTime() {
         return actualTime;
     }

@@ -1,5 +1,7 @@
 package online.masterracing.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.Duration;
 import java.util.List;
 
@@ -42,6 +44,11 @@ public class RaceStats {
 
     public void setTotalTime(Long totalTime) {
         this.totalTime = totalTime;
+    }
+
+    @JsonIgnore
+    public Duration getTotalTimeDuration(){
+        return Duration.ofMillis(totalTime);
     }
 
     @Override

@@ -2,14 +2,12 @@ package online.masterracing.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import online.masterracing.exceptions.NotStartedRaceException;
 import online.masterracing.exceptions.RaceAlreadyStartedException;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "races")
