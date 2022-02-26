@@ -7,13 +7,11 @@ import online.masterracing.model.Participation;
 import online.masterracing.model.Pilot;
 import online.masterracing.model.Race;
 import online.masterracing.repositories.ParticipationRepository;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.Instant;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,11 +27,10 @@ public class ParticipationServiceTest {
     @Mock
     private PilotService pilotService;
     @Mock
-
     private ParticipationService participationService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
 
         participationService = new ParticipationServiceImpl(participationRepository, raceService, pilotService);
@@ -95,42 +92,5 @@ public class ParticipationServiceTest {
         assertThrows(PilotAlreadyInRaceException.class, () -> {
             participationService.addParticipation(participation);
         });
-    }
-
-    @Test
-    public void Test_GetWinner_WhenRaceHasAWinner(){
-        Race race = new Race();
-        race.setLaps(1);
-
-        Pilot pilot1 = new Pilot();
-        Pilot pilot2 = new Pilot();
-        Participation participation1 = new Participation(pilot1, race);
-        Participation participation2 = new Participation(pilot2, race);
-        race.setStartTime(Instant.now());
-        participation1.addLap();
-        participation2.addLap();
-
-        Assert.assertEquals(pilot1, race.getWinner().orElse(null));
-    }
-
-    @Test
-    public void Test_GetWinner_WhenRaceHasNoWinner(){
-        Race race = new Race();
-        race.setLaps(2);
-
-        Pilot pilot1 = new Pilot();
-        Participation participation1 = new Participation(pilot1, race);
-        race.setStartTime(Instant.now());
-        participation1.addLap();
-
-        Assert.assertNull(race.getWinner().orElse(null));
-    }
-
-    @Test
-    public void Test_GetWinner_FromNotStartedRace(){
-        Participation participation = new Participation(new Pilot(), new Race());
-        Race race = participation.getRace();
-
-        assertThrows(NotStartedRaceException.class, race::getWinner);
     }
 }
