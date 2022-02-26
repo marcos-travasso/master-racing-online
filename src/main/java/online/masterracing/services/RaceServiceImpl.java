@@ -1,12 +1,15 @@
 package online.masterracing.services;
 
 import online.masterracing.exceptions.NotFoundException;
+import online.masterracing.exceptions.NotStartedRaceException;
+import online.masterracing.model.Pilot;
 import online.masterracing.model.Race;
 import online.masterracing.model.RaceStats;
 import online.masterracing.repositories.RaceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -49,5 +52,12 @@ public class RaceServiceImpl implements RaceService{
         Race race = findById(id);
 
         return race.getStats();
+    }
+
+    @Override
+    public Optional<Pilot> getWinner(Long id) throws NotStartedRaceException {
+        Race race = findById(id);
+
+        return race.getWinner();
     }
 }

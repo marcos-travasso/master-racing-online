@@ -226,6 +226,31 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get race winner",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ADDRESS}}/races/:id/winner",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"races",
+						":id",
+						"winner"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [

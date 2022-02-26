@@ -1,16 +1,17 @@
 package online.masterracing.controllers;
 
+import online.masterracing.converters.PilotConverter;
 import online.masterracing.converters.RaceConverter;
 import online.masterracing.exceptions.NotFoundException;
 import online.masterracing.exceptions.RaceAlreadyStartedException;
-import online.masterracing.model.Race;
-import online.masterracing.model.RaceDTO;
-import online.masterracing.model.RaceStats;
+import online.masterracing.model.*;
 import online.masterracing.services.RaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RequestMapping("/races")
@@ -43,8 +44,7 @@ public class RaceController {
 
     @GetMapping("/{id}/stats")
     public ResponseEntity<RaceStats> getStats(@PathVariable Long id){
-        RaceStats stats;
-        stats = raceService.getStats(id);
+        RaceStats stats = raceService.getStats(id);
 
         return new ResponseEntity<>(stats, HttpStatus.OK);
     }
@@ -55,5 +55,17 @@ public class RaceController {
         raceService.save(race);
 
         return new ResponseEntity<>(RaceConverter.convertToDTO(race), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/winner")
+    @Nullable
+    public ResponseEntity<PilotDTO> getWinner(@PathVariable Long id){
+        Optional<Pilot> optionalWinner = raceService.getWinner(id);
+
+        if(optionalWinner.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(PilotConverter.convertToDTO(optionalWinner.get()), HttpStatus.OK);
     }
 }
