@@ -3,6 +3,7 @@ package online.masterracing.services;
 import online.masterracing.exceptions.NotStartedRaceException;
 import online.masterracing.exceptions.PilotAlreadyInRaceException;
 import online.masterracing.exceptions.PilotFinishedRaceException;
+import online.masterracing.model.Lap;
 import online.masterracing.model.Participation;
 import online.masterracing.model.Pilot;
 import online.masterracing.model.Race;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,7 +35,7 @@ public class ParticipationServiceTest {
     private ParticipationService participationService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
 
         participationService = new ParticipationServiceImpl(participationRepository, raceService, pilotService);
@@ -107,8 +109,16 @@ public class ParticipationServiceTest {
         Participation participation1 = new Participation(pilot1, race);
         Participation participation2 = new Participation(pilot2, race);
         race.setStartTime(Instant.now());
-        participation1.addLap();
-        participation2.addLap();
+
+        participation1.setLaps(new ArrayList<>());
+        Lap lap1 = new Lap();
+        lap1.setTimeElapsed(1L);
+        participation1.getLaps().add(lap1);
+
+        participation2.setLaps(new ArrayList<>());
+        Lap lap2 = new Lap();
+        lap2.setTimeElapsed(2L);
+        participation2.getLaps().add(lap2);
 
         Assert.assertEquals(pilot1, race.getWinner().orElse(null));
     }
