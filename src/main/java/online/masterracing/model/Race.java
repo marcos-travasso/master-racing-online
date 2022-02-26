@@ -114,4 +114,45 @@ public class Race extends BaseEntity {
 
         return stats;
     }
+
+    @JsonIgnore
+    public Optional<Pilot> getWinner(){
+        if(getStartTime() == null){
+            throw new NotStartedRaceException();
+        }
+
+        Participation bestParticipation = getMaxTimeParticipation();
+        boolean found = false;
+
+        for(Participation participation : getParticipants()){
+            if(participation.getLaps().size() == getLaps()){
+                long participationDuration = participation.getStats().getTotalTimeDuration().toMillis();
+                long bestDuration = bestParticipation.getStats().getTotalTimeDuration().toMillis();
+
+                if(participationDuration < bestDuration){
+                    bestParticipation = participation;
+                    found = true;
+                }
+            }
+        }
+
+        if(!found){
+            return Optional.empty();
+        }
+
+        return Optional.of(bestParticipation.getPilot());
+    }
+
+    @JsonIgnore
+    private Participation getMaxTimeParticipation(){
+        Participation participation = new Participation(new Pilot(), new Race());
+        participation.setLaps(new ArrayList<>());
+
+        Lap dummyLap = new Lap();
+        dummyLap.setTimeElapsed(Long.MAX_VALUE);
+
+        participation.getLaps().add(dummyLap);
+
+        return participation;
+    }
 }
