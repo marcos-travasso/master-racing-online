@@ -1,12 +1,8 @@
 package online.masterracing.services;
 
 import online.masterracing.exceptions.NotStartedRaceException;
-import online.masterracing.model.Lap;
-import online.masterracing.model.Participation;
-import online.masterracing.model.Pilot;
-import online.masterracing.model.Race;
+import online.masterracing.model.*;
 import online.masterracing.repositories.RaceRepository;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -16,8 +12,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -40,9 +36,15 @@ public class RaceServiceTest {
     @Test
     public void Test_StartRace(){
         Race race = new Race();
-        when(raceRepository.findById(anyLong())).thenReturn(Optional.of(race));
+        Circuit circuit = new Circuit();
 
-        race.startRace();
+        race.setCircuit(circuit);
+        circuit.setId(1L);
+
+        when(raceRepository.findById(anyLong())).thenReturn(Optional.of(race));
+        when(circuitService.findById(any())).thenReturn(circuit);
+
+        raceService.startRace(1L);
 
         assertNotNull(race.getStartTime());
     }
@@ -68,7 +70,9 @@ public class RaceServiceTest {
         lap2.setTimeElapsed(2L);
         participation2.getLaps().add(lap2);
 
-        Assert.assertEquals(pilot1, race.getWinner().orElse(null));
+        when(raceRepository.findById(anyLong())).thenReturn(Optional.of(race));
+
+        assertEquals(pilot1, raceService.getWinner(1L).orElse(null));
     }
 
     @Test
@@ -81,7 +85,9 @@ public class RaceServiceTest {
         race.setStartTime(Instant.now());
         participation1.addLap();
 
-        Assert.assertNull(race.getWinner().orElse(null));
+        when(raceRepository.findById(anyLong())).thenReturn(Optional.of(race));
+
+        assertNull(raceService.getWinner(1L).orElse(null));
     }
 
     @Test
@@ -89,6 +95,10 @@ public class RaceServiceTest {
         Participation participation = new Participation(new Pilot(), new Race());
         Race race = participation.getRace();
 
-        assertThrows(NotStartedRaceException.class, race::getWinner);
+        when(raceRepository.findById(anyLong())).thenReturn(Optional.of(race));
+
+        assertThrows(NotStartedRaceException.class, () -> {
+            raceService.getWinner(1L);
+        });
     }
 }
