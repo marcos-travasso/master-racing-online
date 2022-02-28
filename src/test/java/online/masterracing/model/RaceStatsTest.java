@@ -42,7 +42,6 @@ public class RaceStatsTest {
 
         Lap lap1 = new Lap();
         lap1.setTimeElapsed(1L);
-
         Lap lap2 = new Lap();
         lap2.setTimeElapsed(2L);
 

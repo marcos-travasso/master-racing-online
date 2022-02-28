@@ -39,7 +39,6 @@ public class RaceServiceTest {
         Circuit circuit = new Circuit();
 
         race.setCircuit(circuit);
-        circuit.setId(1L);
 
         when(raceRepository.findById(anyLong())).thenReturn(Optional.of(race));
         when(circuitService.findById(any())).thenReturn(circuit);

@@ -40,10 +40,9 @@ public class ParticipationServiceTest {
     public void Test_AddValidLap(){
         Participation participationSpy = spy(Participation.class);
         Race race = new Race();
+        race.setLaps(1);
+        race.startRace();
         participationSpy.setRace(race);
-
-        participationSpy.getRace().setLaps(1);
-        participationSpy.getRace().startRace();
 
         when(participationRepository.findById(anyLong())).thenReturn(Optional.of(participationSpy));
 
@@ -82,9 +81,6 @@ public class ParticipationServiceTest {
         Race race = new Race();
         race.setId(1L);
         Participation participation = new Participation(pilot, race);
-
-        participation.setPilot(pilot);
-        participation.setRace(race);
 
         when(pilotService.findById(anyLong())).thenReturn(pilot);
         when(raceService.findById(anyLong())).thenReturn(race);
