@@ -141,6 +141,8 @@ public class Race extends BaseEntity {
         return Optional.of(bestParticipation.getPilot());
     }
 
+    //This method is used to return a participation with the max time elapsed, so it can be used to compare if another
+    //participation was faster than it.
     @JsonIgnore
     private Participation getMaxTimeParticipation(){
         Participation participation = new Participation(new Pilot(), new Race());
