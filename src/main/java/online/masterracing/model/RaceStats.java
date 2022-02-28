@@ -1,6 +1,7 @@
 package online.masterracing.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import online.masterracing.exceptions.NegativeTimeElapsedException;
 
 import java.time.Duration;
 import java.util.List;
@@ -12,6 +13,8 @@ public class RaceStats {
     private final Long maximumTime;
 
     public RaceStats(List<Lap> laps) {
+        verifyLaps(laps);
+
         totalTime = laps.stream().mapToLong(Lap::getTimeElapsed).sum();
         minimumTime = laps.stream().mapToLong(Lap::getTimeElapsed).min().orElse(0);
         maximumTime = laps.stream().mapToLong(Lap::getTimeElapsed).max().orElse(0);
@@ -57,5 +60,13 @@ public class RaceStats {
                 "Average time: " + getAverageTime() + "\n" +
                 "Minimum time: " + getMinimumTime() + "\n" +
                 "Maximum time: " + getMaximumTime();
+    }
+
+    private void verifyLaps(List<Lap> laps) throws NegativeTimeElapsedException {
+        for(Lap lap: laps){
+            if(lap.getTimeElapsed() < 0){
+                throw new NegativeTimeElapsedException();
+            }
+        }
     }
 }
